@@ -1,0 +1,70 @@
+﻿@model List<Bloggy.web.Models.Domain.BlogPost>
+
+<div class="container">
+    <div class="bg-secondary bg-opacity-10 py-2">
+
+        <h1>Blog - Admin functionality</h1>
+    </div>
+</div>
+
+
+@if (TempData["Error"] != null)
+{
+    <div id="success-alert" class="alert alert-success" role="alert">
+        @TempData["Error"]
+    </div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="success-alert" class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@section Scripts {
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById('success-alert');
+            if (alert) {
+                alert.style.display = 'none';
+            }
+        }, 3000); // 3 seconds
+    </script>
+}
+<div class="container">
+    <table class="table  table-striped">
+        <thead>
+            <tr>
+                
+                <th scope="col">Id</th>
+                <th scope="col">Heading</th>
+                <th scope="col">Blog Title</th>
+                <th scope="col">Tags</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+           @foreach (var blogPost in Model)
+            {
+                <tr>
+                    <th scope="row">@blogPost.id</th>
+                    <td>@blogPost.Heading</td>
+                    <td>@blogPost.PageTitle</td>
+                    <td>
+                        <div class="d-flex justify-content-start">
+                        @foreach(var t in blogPost.Tags)
+                        {
+                            
+                            <span class="badge bg-secondary me-1">@t.Name</span>
+                        }
+
+                    </div>
+                    </td>
+                    <td><a asp-area="" asp-controller="AdminBlogPost" asp-action="Edit" asp-route-id="@blogPost.id">Edit</a></td>
+                    <td><a asp-area="" asp-controller="AdminBlogPost" asp-action="Delete" asp-route-id="@blogPost.id">Delete</a></td>
+                </tr>
+            }
+           
+            
+        </tbody>
+    </table>
+</div>

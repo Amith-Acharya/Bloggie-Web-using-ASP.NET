@@ -1,0 +1,100 @@
+﻿@model Bloggy.web.Models.ViewModels.EditBlogPostRequest
+
+@if (TempData["Error"] != null)
+{
+    <div id="success-alert" class="alert alert-success" role="alert">
+        @TempData["Error"]
+    </div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="success-alert" class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="container">
+    @if (Model != null)
+    {
+        <form class="row g-3" method="post">
+            <div class="col-md-6">
+                <label for="heading" class="form-label">Heading</label>
+                <input type="text" class="form-control" id="heading" asp-for="Heading">
+            </div>
+
+            <div class="col-md-6">
+                <label for="pageTitle" class="form-label">Page Title</label>
+                <input type="text" class="form-control" id="pageTitle" asp-for="PageTitle">
+            </div>
+
+            <div class="col-12">
+                <label for="content" class="form-label">Content</label>
+                <textarea class="form-control" id="content" name="Content" rows="4" asp-for="Content"></textarea>
+            </div>
+
+            <div class="col-12">
+                <label for="shortDescription" class="form-label">Short Description</label>
+                <textarea class="form-control" id="shortDescription" name="ShortDescription" rows="2" asp-for="ShortDescription"></textarea>
+            </div>
+
+            <div class="col-md-6">
+                <label for="featuredImageUrl" class="form-label">Featured Image URL</label>
+                <input type="text" class="form-control" id="featuredImageUrl" asp-for="FeaturedImageUrl">
+            </div>
+
+            <div class="col-md-6">
+                <label for="urlHandle" class="form-label">URL Handle</label>
+                <input type="text" class="form-control" id="urlHandle" asp-for="UrlHandle">
+            </div>
+
+            <div class="col-md-6">
+                <label for="publishedDate" class="form-label">Published Date</label>
+
+                <input type="date" class="form-control" id="publishedDate" name="PublishedDate"
+                       value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            </div>
+
+            <div class="col-md-6">
+                <label for="author" class="form-label">Author</label>
+                <input type="text" class="form-control" id="author" asp-for="Author">
+            </div>
+
+            <div class="col-12">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="Visible" asp-for="Visible">
+                    <label class="form-check-label" for="Visible">
+                        Visible ?
+                    </label>
+                </div>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Tags</label>
+                <select class="form-select" asp-items="@Model.Tags" asp-for="SelectedTag">
+                </select>
+            </div>
+
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        <p>No blog post found to edit.</p>
+    }
+
+</div>
+
+
+@section Scripts {
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById('success-alert');
+            if (alert) {
+                alert.style.display = 'none';
+            }
+        }, 3000); // 3 seconds
+        var editor = new FroalaEditor('#content');
+    </script>
+}

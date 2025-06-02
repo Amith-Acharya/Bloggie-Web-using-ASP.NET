@@ -1,0 +1,37 @@
+﻿@model Bloggy.web.Models.ViewModels.EditTagRequest
+@{
+}
+<div class="container">
+    <div class="bg-secondary bg-opacity-10 py-2">
+
+        <h1>Edit Tag - Admin functionality</h1>
+    </div>
+</div>
+
+
+<div class="container py-5">
+    @if(Model == null)
+    {
+        <p>No model found</p>
+    }
+    else
+    {
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Id</label>
+            <input class="form-control" type="text"  asp-for="Id" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="Name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" asp-for="Name">
+        </div>
+        <div class="mb-3">
+            <label for="Displayname" class="form-label">Display Name</label>
+            <input type="text" class="form-control" id="displayname" asp-for="Displayname">
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-primary btn-danger" asp-controller="admintags" asp-action="Delete">Delete</button>
+        </div>
+    </form>}
+</div>
