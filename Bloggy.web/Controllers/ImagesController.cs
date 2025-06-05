@@ -15,14 +15,14 @@ namespace Bloggy.web.Controllers
             this.imageUploadRepository = imageUploadRepository;
         }
         [HttpPost]
-        public IActionResult UploadimageAsync(IFormFile file)
+        public async Task<IActionResult> UploadimageAsync(IFormFile file)
         {
-            var url= imageUploadRepository.UploadImageAsync(file);
+            var url=  await imageUploadRepository.UploadImageAsync(file);
             if(url==null)
             {
                 return Problem("Image upload failed.",null,(int)HttpStatusCode.InternalServerError);
             }
-            return new JsonResult(new { link=url }) { StatusCode = (int)HttpStatusCode.Created };
+            return new JsonResult(new { link=url });
 
         }
     }
