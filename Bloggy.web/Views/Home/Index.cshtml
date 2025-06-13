@@ -1,8 +1,52 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model Bloggy.web.Models.ViewModels.HomeBlogTag
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container my-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h1 class="display-4 fw-bold">Welcome to My Website</h1>
+            <p class="lead">This is a short description about your website. You can highlight features, mission, or a call to action here to attract users.</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="https://images.pexels.com/photos/29844114/pexels-photo-29844114/free-photo-of-elegant-museum-interior-with-classical-sculpture.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load" alt="Header Image" class="img-fluid rounded">
+        </div>
+        <div class="mb-7">
+          @foreach(var t in Model.Tags)
+          {
+              <span class="badge bg-secondary me-1">@t.Name</span>
+          }
+        </div>
+    </div>
+</div>
+<br />
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6 text-center">
+        @if (Model != null && Model.BlogPosts.Any())
+        {
+        foreach(var post in Model.BlogPosts) {
+                <img src="@post.FeaturedImageUrl" alt="Image" class="img-fluid rounded mb-4">
+
+                <h2 class="fw-bold">@post.PageTitle</h2>
+                <div class="mb-2">
+          @foreach(var t in post.Tags)
+          {
+              <span class="badge bg-secondary me-1">@t.Name</span>
+          }
+        </div>
+                 <div class="text-start" style="text-align: justify;">
+        <p class="text-muted">Author: @post.Author</p>
+        <p class="text-muted">Published date: @post.PublishedDate.ToShortDateString()</p>
+        
+
+        
+
+        <p class="text-muted">@post.ShortDescription</p>
+      </div>
+
+                <a class="btn btn-dark" asp-area="" asp-controller="BlogDisplay" asp-action="Index" asp-route-urlHandle="@post.UrlHandle">Read More</a>
+                <br /><br /><br />
+            }
+        }
+        </div>
+    </div>
 </div>

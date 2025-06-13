@@ -1,6 +1,8 @@
-﻿namespace Bloggy.web.Models.Domain
+﻿using Bloggy.web.Models.Domain;
+
+namespace Bloggy.web.Models.ViewModels
 {
-    public class BlogPost
+    public class BlogPostLikeViewModel
     {
         public Guid id { get; set; }
         public string Heading { get; set; }
@@ -12,9 +14,12 @@
         public DateTime PublishedDate { get; set; }
         public string Author { get; set; }
         public Boolean Visible { get; set; }
-        //navigation properties
         public ICollection<Tag> Tags { get; set; }
-        public ICollection<BlogPostLikes> Likes { get; set; }
-        public ICollection<BlogPostComment> BlogPostComment { get; set; }
+        public int TotalLikes { get; set; }
+        public Boolean Liked { get; set; }
+        public String Comment { get; set; }
+
+        public IEnumerable<BlogComment> allcomments { get; set; }
+
     }
 }

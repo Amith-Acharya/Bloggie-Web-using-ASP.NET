@@ -1,11 +1,13 @@
 ﻿using Bloggy.web.Models.Domain;
 using Bloggy.web.Models.ViewModels;
 using Bloggy.web.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Bloggy.web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminBlogPostController : Controller
     {
         private readonly ITagRepository tagRepository;
@@ -16,6 +18,7 @@ namespace Bloggy.web.Controllers
             this.tagRepository = tagRepository;
             this.blogPostRepository = blogPostRepository;
         }
+        
         [HttpGet]
         public async Task<IActionResult> Add()
         {

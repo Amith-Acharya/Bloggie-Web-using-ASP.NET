@@ -1,0 +1,27 @@
+﻿
+@model Bloggy.web.Models.ViewModels.LoginViewModel;
+@{
+}
+<div class="container mx-auto">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-6">
+            <h2 class="mb-3 h3 text-center">Login</h2>
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-control" id="Username" required asp-for="Username" />
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="text" class="form-control" id="Password" required asp-for="Password" />
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-dark" type="submit">Login</button>
+                </div>
+                <input type="hidden" asp-for="ReturnUrl" />
+            </form>
+
+        </div>
+    </div>
+</div>

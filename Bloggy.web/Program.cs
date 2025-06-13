@@ -1,5 +1,6 @@
 using Bloggy.web.Data;
 using Bloggy.web.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,9 +21,15 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BloggieDBContext>(options=>
 options.UseSqlServer(builder.Configuration.GetConnectionString("BloggieDbConnectionString")));
+builder.Services.AddDbContext<AuothDBContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("AuothDbConnectionString")));
+builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<AuothDBContext>();
 builder.Services.AddScoped<ITagRepository , TagRepository>();
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 builder.Services.AddScoped<IImageUploadRepository, cloudinaryRepository>();
+builder.Services.AddScoped<IBlogPostLikeRepository, BlogPostLikeRepository>();
+builder.Services.AddScoped<IBlogPostCommentRepository, BlogPostCommentRepository>();
+builder.Services.AddScoped<IUserManagerRepository, UserManagerRepository>();
 
 var app = builder.Build();
 
@@ -38,6 +45,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
 
 app.UseAuthorization();
 

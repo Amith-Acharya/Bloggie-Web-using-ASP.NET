@@ -8,6 +8,7 @@ namespace Bloggy.web.Migrations
     /// <inheritdoc />
     public partial class initialmigration : Migration
     {
+
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {

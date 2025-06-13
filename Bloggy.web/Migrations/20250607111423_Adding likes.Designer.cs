@@ -4,6 +4,7 @@ using Bloggy.web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bloggy.web.Migrations
 {
     [DbContext(typeof(BloggieDBContext))]
-    partial class BloggieDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250607111423_Adding likes")]
+    partial class Addinglikes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,32 +84,6 @@ namespace Bloggy.web.Migrations
                     b.ToTable("BlogPosts");
                 });
 
-            modelBuilder.Entity("Bloggy.web.Models.Domain.BlogPostComment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BlogPostID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlogPostID");
-
-                    b.ToTable("BlogPostComment");
-                });
-
             modelBuilder.Entity("Bloggy.web.Models.Domain.BlogPostLikes", b =>
                 {
                     b.Property<Guid>("Id")
@@ -160,15 +137,6 @@ namespace Bloggy.web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Bloggy.web.Models.Domain.BlogPostComment", b =>
-                {
-                    b.HasOne("Bloggy.web.Models.Domain.BlogPost", null)
-                        .WithMany("BlogPostComment")
-                        .HasForeignKey("BlogPostID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Bloggy.web.Models.Domain.BlogPostLikes", b =>
                 {
                     b.HasOne("Bloggy.web.Models.Domain.BlogPost", null)
@@ -180,8 +148,6 @@ namespace Bloggy.web.Migrations
 
             modelBuilder.Entity("Bloggy.web.Models.Domain.BlogPost", b =>
                 {
-                    b.Navigation("BlogPostComment");
-
                     b.Navigation("Likes");
                 });
 #pragma warning restore 612, 618

@@ -44,6 +44,11 @@ namespace Bloggy.web.Repository
             return await bloggieDBContext.BlogPosts.Include(x=>x.Tags).FirstOrDefaultAsync(x => x.id == id);
         }
 
+        public async Task<BlogPost?> GetByUrlHandleAsync(string urlHandle)
+        {
+            return await bloggieDBContext.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.UrlHandle == urlHandle);
+        }
+
         public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
         {
             var existing=await bloggieDBContext.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x=>x.id==blogPost.id);

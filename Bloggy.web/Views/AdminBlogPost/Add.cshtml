@@ -1,6 +1,6 @@
 ﻿@model Bloggy.web.Models.ViewModels.AddBlogPostRequest
 
-
+<div class="container"><h2>ADD Blog </h2></div>
 <div class="container">
     <form class="row g-3" method="post">
         <div class="col-md-6">
@@ -26,11 +26,12 @@
         <div class="mb-3">
             <label class="form-label">Featured Image</label>
             <input type="file" id="featuredimageupload" class="form-control" />
+            <img src="" id="dispaly" style="display:none;width:300px;" />
         </div>
-
+        <br />
         <div class="col-md-6">
             <label for="featuredImageUrl" class="form-label">Featured Image URL</label>
-            <input type="text" class="form-control" id="featuredImageUrl" asp-for="FeaturedImageUrl">
+            <input type="text" class="form-control" id="featuredImageUrl" asp-for="FeaturedImageUrl" readonly>
         </div>
 
         <div class="col-md-6">
@@ -78,6 +79,7 @@
 
         const featureduploadele = document.getElementById('featuredimageupload');
         const featuredimageele = document.getElementById('featuredImageUrl');
+        const imgtag = document.getElementById('dispaly');
 
         async function uploadfeaturedimage(e) {
             console.log(e.target.files[0]);
@@ -85,20 +87,24 @@
             let data = new FormData();
             data.append('file', e.target.files[0]);
             
-            console.log(data.get("file"));
+            console.log(data);
             
 
             try {
-                const response = await fetch('/api/images', {
+                await fetch('/api/images', {
                     method: 'POST',
                     headers: {
                         'Accept': '*/*',
                     },
                     body: data
-                }); 
+                })
+                 .then(response =>  response.json())
+                 .then(result=>{featuredimageele.value=result.link;
+                 imgtag.src=result.link;
+                 imgtag.style.display='block';
+                 });
+                
 
-                const result =  response.json();
-                console.log(result);
             } 
             catch (error) {
                 console.error('Upload failed:', error);
